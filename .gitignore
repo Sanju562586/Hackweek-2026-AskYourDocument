@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+venv/
+__pycache__/
+
+# Environment
+.env
+.env.local
+
+# Build
+dist/
+build/
+chroma_db/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Uploads
+uploads/
+*.pdf
+*.txt
+*.docx
+*.doc
+!sample_documents/**
+!test_document.txt
+.env
+**/.env
+# Python
+*.pyc
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+.vite/

@@ -1,0 +1,31 @@
+Git Version Control Cheat Sheet
+
+Git is a distributed version control system designed to handle everything from small to very large projects with speed and efficiency.
+
+Common Git Commands:
+
+1. Setup & Config:
+   git config --global user.name "Your Name"
+   git config --global user.email "your.email@example.com"
+
+2. Starting a Repo:
+   git init : Initialize a local Git repository
+   git clone <url> : Clone a remote repository
+
+3. Staging & Committing:
+   git status : Check the status of modified files
+   git add <file> : Add file contents to the staging area
+   git add . : Stage all modified and new files
+   git commit -m "commit message" : Commit staged changes
+
+4. Branching & Merging:
+   git branch : List local branches
+   git branch <name> : Create a new branch
+   git checkout <name> : Switch to a branch
+   git merge <branch> : Merge specified branch into active branch
+   git branch -d <name> : Delete a branch
+
+5. Sharing & Updating:
+   git fetch : Download objects and refs from another repository
+   git pull : Fetch from and integrate with another repository or a local branch
+   git push : Update remote refs along with associated objects

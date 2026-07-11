@@ -1,0 +1,30 @@
+Markdown Specification Overview
+
+Markdown is a lightweight markup language with plain-text-formatting syntax. Its design allows it to be converted to many formats, but the original tool filters it to HTML.
+
+Common Markdown Syntax Elements:
+
+1. Headings:
+   Use # for H1, ## for H2, ### for H3, up to ###### for H6.
+
+2. Emphasis:
+   *italic* or _italic_ for emphasis.
+   **bold** or __bold__ for strong emphasis.
+
+3. Lists:
+   Unordered lists use asterisks, pluses, or hyphens:
+   - Item A
+   - Item B
+   Ordered lists use numbers:
+   1. First item
+   2. Second item
+
+4. Links:
+   Use [Link Text](URL) to create hyperlinks.
+
+5. Code Blocks:
+   Use backticks `for inline code`.
+   Use triple backticks for fenced code blocks.
+
+6. Blockquotes:
+   Use > before text to format it as a blockquote.

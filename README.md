@@ -1,8 +1,22 @@
-# Ask Your Documents - AI-Powered Document Q&A System
+# Ask Your Documents — AI-Powered Document Q&A System
 
 An AI-powered Document Question Answering System that enables users to upload documents (PDF, TXT, DOCX) and interact with their contents using natural language. 
 
 The application utilizes a Retrieval-Augmented Generation (RAG) pipeline to parse text, segment it into manageable chunks, generate vector embeddings, store them in a local vector database, and perform semantic similarity searches to generate accurate, context-aware answers.
+
+---
+
+## What's New: Dark Glassmorphism Update
+
+The UI has been completely overhauled with a stunning **dark glassmorphism aesthetic**:
+- **Animated Backgrounds:** Dark mesh gradients with floating, slow-moving glowing orbs.
+- **Glass Components:** Frosted glass cards with backdrop blur, translucent borders, and glossy hover effects.
+- **Improved UX:** 
+  - Toast notification system for success/error messages.
+  - Quick-load Sample Documents section (test without uploading).
+  - Visual confidence meters and detailed context citation cards.
+  - Animated typing indicators and progress pipelines.
+  - Global stats tracking (Document Count, Query Count, Vector Chunks).
 
 ---
 
@@ -26,11 +40,11 @@ The application utilizes a Retrieval-Augmented Generation (RAG) pipeline to pars
 - **python-docx**: DOCX file parser.
 - **sentence-transformers (`all-MiniLM-L6-v2`)**: Local vector embedding generation (cached locally).
 - **ChromaDB**: Highly efficient local vector database.
-- **OpenRouter & Google Gemini**: LLM providers for response generation.
+- **OpenRouter & Google Gemini**: LLM providers for response generation (Defaults to `gemini-1.5-flash`).
 
 ### Frontend
 - **React 18 with Vite**: Modern, ultra-fast UI rendering framework.
-- **Tailwind CSS**: Sleek, responsive styling with a custom light-purple theme.
+- **Tailwind CSS**: Sleek, responsive styling with custom glassmorphism extensions.
 - **Axios**: API communication with the FastAPI backend.
 - **Lucide React**: Premium icon assets.
 
@@ -61,7 +75,7 @@ graph TD
 ### Prerequisites
 - Python 3.9+
 - Node.js 16+
-- OpenRouter API Key (placed in backend configuration)
+- API Keys for Gemini or OpenRouter (placed in backend configuration)
 
 ### Option 1: Automated Installation (Recommended)
 
@@ -86,8 +100,8 @@ pip install -r requirements.txt
 
 Create a `.env` file inside the `backend/` directory:
 ```env
-LLM_PROVIDER=openrouter
-OPENROUTER_API_KEY=your_openrouter_api_key_here
+LLM_PROVIDER=gemini
+GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
 Start the FastAPI application. *Note: We set `HF_HUB_OFFLINE=1` to run the embedding generator with local cached weights:*
@@ -111,10 +125,10 @@ npm run dev
 ## Usage Guide
 
 1. Open http://localhost:5173 in your browser.
-2. Drag and drop any PDF, TXT, or DOCX document into the dotted upload zone (or click to browse).
+2. Drag and drop any PDF, TXT, or DOCX document into the dotted upload zone (or click to load a Sample Document).
 3. Watch the **Processing RAG Pipeline** overlay modal step through **Chunking**, **Embedding**, and **Vector DB** storage.
 4. Type a natural language question in the query input at the bottom of the screen.
-5. The chat panel will automatically scroll to the bottom as the answer is generated.
+5. Watch the animated typing indicator generate your response with confidence metrics and citations.
 
 ---
 
@@ -127,10 +141,3 @@ cd backend
 source venv/bin/activate
 python test_backend.py
 ```
-
----
-
-## Troubleshooting
-
-- **Error code: 402 (Payment Required)**: OpenRouter requires sufficient credits to cover the maximum token limit. The application is pre-configured with a small token cap (`max_tokens=150`) to keep requests lightweight and inexpensive.
-- **ChromaDB Lock / SQLite Errors**: If backend tests hang, make sure you stop the running FastAPI backend server instance first. ChromaDB utilizes a local persistent SQLite file lock which prevents simultaneous write accesses.
