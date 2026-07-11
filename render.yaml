@@ -4,8 +4,10 @@ services:
     env: python
     rootDir: backend
     buildCommand: pip install -r requirements.txt
-    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: uvicorn main:app --host 0.0.0.0 --port 10000
     envVars:
+      - key: PORT
+        value: 10000
       - key: LLM_PROVIDER
         value: openrouter
       - key: OPENROUTER_API_KEY

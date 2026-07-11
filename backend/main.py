@@ -24,7 +24,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-rag_pipeline = RAGPipeline()
+rag_pipeline = None
+
+@app.on_event("startup")
+async def startup_event():
+    global rag_pipeline
+    rag_pipeline = RAGPipeline()
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
