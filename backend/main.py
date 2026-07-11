@@ -26,10 +26,11 @@ app.add_middleware(
 
 rag_pipeline = None
 
-@app.on_event("startup")
-async def startup_event():
+def get_rag_pipeline() -> RAGPipeline:
     global rag_pipeline
-    rag_pipeline = RAGPipeline()
+    if rag_pipeline is None:
+        rag_pipeline = RAGPipeline()
+    return rag_pipeline
 
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -74,7 +75,7 @@ async def health_check():
 @app.get("/api/stats", response_model=StatsResponse)
 async def get_stats():
     try:
-        stats = rag_pipeline.get_stats()
+        stats = get_rag_pipeline().get_stats()
         return StatsResponse(**stats)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching stats: {str(e)}")
@@ -100,7 +101,7 @@ async def upload_document(file: UploadFile = File(...)):
         with open(file_path, "wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
 
-        result = await rag_pipeline.process_and_store_document(
+        result = await get_rag_pipeline().process_and_store_document(
             file_path=file_path,
             filename=file.filename,
             file_type=file_extension
@@ -136,7 +137,7 @@ async def load_sample_document(filename: str):
         raise HTTPException(status_code=404, detail="Sample file not found")
 
     try:
-        result = await rag_pipeline.process_and_store_document(
+        result = await get_rag_pipeline().process_and_store_document(
             file_path=file_path,
             filename=filename,
             file_type="txt"
@@ -154,7 +155,7 @@ async def query_documents(request: QueryRequest):
         raise HTTPException(status_code=400, detail="Question cannot be empty")
 
     try:
-        result = rag_pipeline.query(request.question)
+        result = get_rag_pipeline().query(request.question)
         return QueryResponse(**result)
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error processing query: {str(e)}")
@@ -163,7 +164,7 @@ async def query_documents(request: QueryRequest):
 @app.get("/api/documents", response_model=List[DocumentResponse])
 async def get_documents():
     try:
-        documents = rag_pipeline.get_documents()
+        documents = get_rag_pipeline().get_documents()
         return [DocumentResponse(**doc) for doc in documents]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error fetching documents: {str(e)}")
@@ -172,7 +173,7 @@ async def get_documents():
 @app.delete("/api/documents/{document_id}")
 async def delete_document(document_id: str):
     try:
-        success = rag_pipeline.delete_document(document_id)
+        success = get_rag_pipeline().delete_document(document_id)
         if not success:
             raise HTTPException(status_code=404, detail="Document not found")
         return {"message": "Document deleted successfully", "document_id": document_id}
@@ -185,7 +186,7 @@ async def delete_document(document_id: str):
 @app.delete("/api/documents")
 async def clear_all_documents():
     try:
-        rag_pipeline.clear_all_documents()
+        get_rag_pipeline().clear_all_documents()
         return {"message": "All documents cleared successfully"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error clearing documents: {str(e)}")
