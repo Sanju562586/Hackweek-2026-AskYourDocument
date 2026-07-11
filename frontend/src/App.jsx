@@ -14,8 +14,7 @@ import {
   BarChart2,
   Command
 } from 'lucide-react';
-import { uploadDocument, queryDocuments, getDocuments, deleteDocument, clearAllDocuments, loadSampleDocument } from './services/api';
-import axios from 'axios';
+import api, { uploadDocument, queryDocuments, getDocuments, deleteDocument, clearAllDocuments, loadSampleDocument } from './services/api';
 
 function App() {
   const [documents, setDocuments] = useState([]);
@@ -59,7 +58,7 @@ function App() {
 
   const fetchStats = async () => {
     try {
-      const response = await axios.get('/api/stats');
+      const response = await api.get('/stats');
       setStats(response.data);
     } catch (err) {
       console.error('Error fetching stats', err);
