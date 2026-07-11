@@ -10,4 +10,6 @@ services:
         value: openrouter
       - key: OPENROUTER_API_KEY
         sync: false # You will enter this value manually in the Render dashboard
+      - key: PYTHON_VERSION
+        value: 3.11.4
     plan: free
